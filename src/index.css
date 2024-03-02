@@ -1,0 +1,30 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+}
+.active{
+    background-color: aqua;
+}
+body {
+    background-color: #F7F7F8;
+}
+body a {
+    text-decoration: none;
+
+}
+button {
+    border: none;
+    background-color: #fff;
+}
+ul {
+    list-style-type: none;
+}
+.container {
+    background-color: #F7F7F8;
+    margin: auto;
+    width: calc(100% - 324px);
+}
+.swiper-slide {
+    flex-shrink: 1;
+}
