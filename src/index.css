@@ -37,6 +37,7 @@ ul {
     display: inline-block;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
+    background-color: aqua;
     }
 
     @keyframes rotation {
