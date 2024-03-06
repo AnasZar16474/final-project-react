@@ -8,7 +8,6 @@ function Signup() {
     password: "",
     image: "",
   });
-  const [error, setError] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -43,9 +42,11 @@ function Signup() {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="userName">userName</label>
+      <label  htmlFor="userName">userName</label>
       <input
+    
         type="text"
+        placeholder="Entre name"
         id="userName"
         name="userName"
         onChange={handleChange}
