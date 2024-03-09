@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { object, string } from "yup";
+import {  Bounce, toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 function Signup() {
+  const navigate=useNavigate();
   const [user, setUser] = useState({
     userName: "",
     email: "",
@@ -9,6 +12,7 @@ function Signup() {
     image: "",
   });
   const [error, setError] = useState([]);
+  const[loader,setLoader]=useState(false)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -41,6 +45,7 @@ function Signup() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     if (await validateData()) {
       const formData = new FormData();
       formData.append("userName", user.userName);
@@ -54,10 +59,40 @@ function Signup() {
           formData
         );
         console.log("data", data);
+        if(data.message=="success"){
+          toast.success('created success', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+            transition: Bounce,
+            });
+            navigate("/");
+    
+        }
       } catch (Error) {
-        console.log(Error);
+        if(Error.response.data.message === "email already exists"){
+          toast.error(Error.response.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+            });
+        }
+      }finally{
+        setLoader(false);
       }
     }
+    setLoader(false);
   };
   return (
     <>
@@ -90,7 +125,7 @@ function Signup() {
         />
         <label htmlFor="image">image</label>
         <input type="file" id="image" name="image" onChange={handleImage} />
-        <input type="submit" value="Register" />
+        <input type="submit" disabled={loader?"disabled":null} value="Register" />
       </form>
     </>
   );

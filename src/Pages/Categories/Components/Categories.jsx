@@ -27,7 +27,6 @@ function Categories() {
   useEffect(() => {
     getCategories();
   }, []);
-  console.log(import.meta.env.VITE_API);
   if (loader) {
     return <Loader />;
   }

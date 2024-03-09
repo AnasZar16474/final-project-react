@@ -1,12 +1,16 @@
 import axios from "axios";
 import { useState } from "react";
 import { object, string } from 'yup';
+import {  Bounce, toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 function Signin() {
+  const navigate=useNavigate();
   const [user, setUser] = useState({
     email: "",
     password: "", 
   });
   const[error,setError]=useState([])
+  const[loader,setLoader]=useState(false)
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -28,16 +32,58 @@ setError(Error.errors)
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     if(await validateLogin()){
     try{
     const { data } = await axios.post(
       `${import.meta.env.VITE_API_URL}/auth/signin`,
-     {user}
+     user
     );
     console.log("data", data);
-  }catch(Error){console.log(Error)}
-}
-  };
+    if(data.message=="success"){
+      toast.success("login success", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
+  }
+  navigate("/");
+} catch(Error){
+  if(Error.response.data.message==="plz confirm your email"){
+    toast.error(Error.response.data.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
+  }
+  else if(Error.response.data.message==="data invalid"){
+  toast.error(Error.response.data.message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+    });
+}}
+finally{setLoader(false)}
+  }setLoader(false);
+};
   return (
     <>
     {error.length > 0 ? error.map((e) => <p key={e}>{e}</p>) : ""}
@@ -58,7 +104,7 @@ setError(Error.errors)
         onChange={handleChange}
         value={user.password}
       />
-      <input type="submit" value="Login" />
+      <input type="submit" disabled={loader?"disabled":null} value="Login" />
     </form>
     </>
   )

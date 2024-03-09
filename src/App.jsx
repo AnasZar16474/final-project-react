@@ -6,7 +6,8 @@ import Signin from "./Pages/Signin/Components/Signin";
 import Signup from "./Pages/Signup/Components/Signup";
 import Products from "./Pages/Products/Components/Products";
 import Error from "./Pages/Error/Components/Error";
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const router = createBrowserRouter([
@@ -47,7 +48,7 @@ function App() {
   
   
   <RouterProvider router={router} />
-  
+  <ToastContainer />
   
   
   </>;
