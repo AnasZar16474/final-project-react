@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import Loader from "./Loader";
+import Loader from "../../../Loader/Loader";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -36,14 +36,14 @@ function Categories() {
       <p>{error}</p>
       <Swiper
         slidesPerView={1}
-        spaceBetween={10}
+        spaceBetween={0}
         pagination={{
           clickable: true,
         }}
         breakpoints={{
           "@0.00": {
             slidesPerView: 1,
-            spaceBetween: 10,
+            spaceBetween: 30,
           },
           "@0.75": {
             slidesPerView: 2,
@@ -68,7 +68,6 @@ function Categories() {
               <Link to={`/products/${e._id}`}>
                 {" "}
                 <img
-                  className="col-xl-6 col-md-4 col-sm-6"
                   src={e.image.secure_url}
                 />{" "}
               </Link>{" "}

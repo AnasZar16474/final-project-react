@@ -2,8 +2,11 @@ import axios from "axios";
 import { useState } from "react";
 import { object, string } from 'yup';
 import {  Bounce, toast } from 'react-toastify';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../../../context/User";
 function Signin() {
+  const{setUserToken}=useContext(UserContext)
   const navigate=useNavigate();
   const [user, setUser] = useState({
     email: "",
@@ -53,6 +56,8 @@ setError(Error.errors)
         transition: Bounce,
         });
   }
+  localStorage.setItem("userToken",data.token);
+  setUserToken(data.token)
   navigate("/");
 } catch(Error){
   if(Error.response.data.message==="plz confirm your email"){
@@ -106,6 +111,7 @@ finally{setLoader(false)}
       />
       <input type="submit" disabled={loader?"disabled":null} value="Login" />
     </form>
+    <Link to="/SendCode">Forgot Password??</Link>
     </>
   )
 }

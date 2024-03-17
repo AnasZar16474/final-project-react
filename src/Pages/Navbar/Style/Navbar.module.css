@@ -15,14 +15,28 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
+}
+.header .row button{
+  margin-bottom: 10px;
+  margin-left: 568px;
 }
 
-.header .list ul {
+.header .list .ulOne ul{
   display: flex;
   flex-wrap: wrap;
   gap: 26px;
   justify-content: center;
   align-items: center;
+  margin-top: 5px;
+}
+.header .list .ulTwo ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
 }
 
 .header .home {
@@ -32,6 +46,15 @@
   padding: 14px 24px;
   border-radius: 8px;
   margin-top: 17px;
+}
+.header .logOut {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  border-radius: 8px;
+  margin-top: 17px;
+  background-color: rgb(245, 49, 49);
 }
 .header .auth {
   display: flex;
@@ -51,4 +74,33 @@
   border-radius: 8px;
   align-items: center;
   color: #262626;
+}
+@media screen and (max-width: 1400px){
+  .header .row button{
+   
+    margin-left: 400px;
+  }
+}
+@media screen and (max-width: 1200px){
+  .header .row button{
+    
+    margin-left: 225px;
+  }
+}
+@media screen and (max-width: 992px){
+  .header .row button{
+    
+    text-align: center;
+  }
+}
+@media screen and (max-width: 768px){
+  .header .row button{
+  
+    text-align: center;
+  }
+}
+@media screen and (max-width: 576px){
+  .header .row button{
+    text-align: center;
+  }
 }

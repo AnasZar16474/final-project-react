@@ -5,9 +5,11 @@ import Footer from "../Pages/Footer/Components/Footer"
 
 function Roots() {
   return (
-    <>
+   <>
     <Navbar/>
+    <div className="container">
     <Outlet/>
+    </div>
     <Footer/>
     </>
   )

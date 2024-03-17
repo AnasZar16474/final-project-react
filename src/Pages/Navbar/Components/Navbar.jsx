@@ -1,38 +1,78 @@
-import { NavLink } from "react-router-dom"
-import style from "./../Style/Navbar.module.css"
+import { NavLink, useNavigate } from "react-router-dom";
+import style from "./../Style/Navbar.module.css";
+import { UserContext } from "../../../context/User";
+import { useContext } from "react";
 function Navbar() {
+  const { userName, setUserName, setUserToken } = useContext(UserContext);
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("userToken");
+    setUserName(null);
+    setUserToken(null);
+    navigate("/Signin");
+  };
   return (
-   <>
-    <header className={style.header}>
-  <div className="container">
-    <div className={style.row}>
-        <div className={style.list}>
-          <ul >
-            <li>
-              <NavLink className={style.home}  to="/">Home</NavLink>
-            </li>
-            <li>
-              <NavLink className={style.home} to="Categories">Categories</NavLink>
-            </li>
-            <li>
-              <NavLink className={style.home} to="Products">Products</NavLink>
-            </li>
-            <li>
-              <NavLink className={style.home} to="Cart">Cart</NavLink>
-            </li>
-          </ul>
+    <>
+      <p className="text-center fs-2 text-primary">welcome {userName}</p>
+      <header className={style.header}>
+        <div className="container">
+          <div className={style.row}>
+            <div className={style.list}>
+              {userName ? (
+                <div className={style.row}>
+                  <div className={style.ulOne}>
+                    <ul>
+                      <li>
+                        <NavLink className={style.home} to="/">
+                          Home
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink className={style.home} to="Categories">
+                          Categories
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink className={style.home} to="Products">
+                          Products
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink className={style.home} to="Cart">
+                          Cart
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </div>
+                  <div>
+                    <button
+                      className="bg-danger p-3 mt-3 rounded-3"
+                      onClick={logout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className={style.ulTwo}>
+                  <ul>
+                    <div className={style.auth}>
+                      <NavLink to="Signin" className={style.signup}>
+                        SignIn
+                      </NavLink>
+                      <NavLink to="SignUp" className={style.login}>
+                        SignUp
+                      </NavLink>
+                    </div>
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      
-        <div className={style.auth}>
-          <NavLink to="Signin" className={style.signup}>SignIn</NavLink>
-          <NavLink to="SignUp" className={style.login}>SignUp</NavLink>
-        </div>
-       </div>
-       </div>
-    </header>
-   
-   </>
-  )
+      </header>
+    </>
+  );
 }
 
-export default Navbar
+export default Navbar;
