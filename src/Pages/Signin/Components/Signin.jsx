@@ -24,7 +24,7 @@ function Signin() {
   const validateLogin= async()=>{
    const schemaLogin= object({
       email: string().email().required(),
-      password: string().min(5).max(18).required(),
+      password: string().required(),
     })
     try{ await schemaLogin.validate(user,{abortEarly:false})
      return true}

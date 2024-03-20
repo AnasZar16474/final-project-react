@@ -1,4 +1,19 @@
 .button{
-    padding: 20px;
+    padding: 2px 20px;
     border: 1px solid red;
+    font-size: 2rem;
+    background-color:pink ;
+}
+.row{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.rowA{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 5px;
+
 }

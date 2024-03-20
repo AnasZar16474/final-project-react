@@ -28,3 +28,6 @@ ul {
 .swiper-slide {
     flex-shrink: 1;
 }
+.card img{
+    aspect-ratio: 200 / 230
+}

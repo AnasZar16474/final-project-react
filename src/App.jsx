@@ -13,6 +13,7 @@ import UserContextProvider from "./context/User";
 import Products from "./Pages/ProductsAll/Components/Products";
 import SendCode from "./Pages/SendCode/Components/SendCode";
 import ForgotPassword from "./Pages/ForgotPassword/Components/ForgotPassword";
+import Product from "./Pages/Product/Cpmponents/Product";
 
 function App() {
   const router = createBrowserRouter([
@@ -58,6 +59,10 @@ function App() {
     {
       path:"/ForgotPassword",
       element:<ForgotPassword/>
+    },
+    {
+      path:"/Product/:id",
+      element:<Product/>
     },
     {
       path:"/*",

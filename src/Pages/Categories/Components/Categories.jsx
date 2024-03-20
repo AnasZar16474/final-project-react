@@ -17,8 +17,8 @@ function Categories() {
         `${import.meta.env.VITE_API_URL}/categories/active?page=1&limit=10`
       );
       setCategories(data.categories);
-    } catch (error) {
-      setError(error);
+    } catch (Error) {
+      setError(Error.response.data.message)
     } finally {
       setLoader(false);
     }
@@ -33,7 +33,7 @@ function Categories() {
 
   return (
     <>
-      <p>{error}</p>
+      <p className="text-center fs-2">{error}</p>
       <Swiper
         slidesPerView={1}
         spaceBetween={0}

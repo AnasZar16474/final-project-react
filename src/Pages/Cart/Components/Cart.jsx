@@ -1,76 +1,163 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import style from "../css/Cart.module.css"
+import style from "../css/Cart.module.css";
+import Loader from "../../../Loader/Loader";
+import { Bounce, toast } from "react-toastify";
 function Cart() {
   const [details, setDetails] = useState([]);
+  const [error, setError] = useState("");
+  const [loader, setLoader] = useState(true);
+  const [loaderA, setLoaderA] = useState(false);
   const token = localStorage.getItem("userToken");
   const getCart = async () => {
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
-      headers: {
-        Authorization: `Tariq__${token}`,
-      },
-    });
-    setDetails(data.products);
+    try {
+      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
+        headers: {
+          Authorization: `Tariq__${token}`,
+        },
+      });
+      setDetails(data.products);
+      console.log(data);
+    } catch (Error) {
+      setError(Error.response.data.message);
+    } finally {
+      setLoader(false);
+    }
   };
   useEffect(() => {
     getCart();
-  },[details]);
+  }, [details]);
   const increase = async (productId) => {
-    const { data } = await axios.patch(
-      `${import.meta.env.VITE_API_URL}/cart/incraseQuantity`,
-      {
-        productId,
-      },
-      {
-        headers: {
-          Authorization: `Tariq__${token}`,
+    try {
+      const { data } = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/cart/incraseQuantity`,
+        {
+          productId,
         },
-      }
-    );
-    console.log(data);
+        {
+          headers: {
+            Authorization: `Tariq__${token}`,
+          },
+        }
+      );
+      console.log(data);
+    } catch (Error) {
+      console.log(Error);
+    }
   };
   const decrease = async (productId) => {
-    const { data } = await axios.patch(
-      `${import.meta.env.VITE_API_URL}/cart/decraseQuantity`,
-      {
-        productId,
-      },
-      {
+    try {
+      const { data } = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/cart/decraseQuantity`,
+        {
+          productId,
+        },
+        {
+          headers: {
+            Authorization: `Tariq__${token}`,
+          },
+        }
+      );
+      console.log(data);
+    } catch (Error) {
+      console.log(Error);
+    }
+  };
+
+  const clearToCart = async (productId) => {
+    setLoaderA(true);
+    try {
+      const { data } = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/cart/removeItem`,
+        {
+          productId,
+        },
+        {
+          headers: {
+            Authorization: `Tariq__${token}`,
+          },
+        }
+      );
+      if (data.message === "success") {
+        toast.success("remove success", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+        });
+      }
+    } catch (Error) {
+      console.log(Error);
+    } finally {
+      setLoaderA(false);
+    }
+  };
+  const clearAll= async () => {
+    try {
+      const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/cart/clear`,null, {
         headers: {
           Authorization: `Tariq__${token}`,
         },
-      }
-    );
-    console.log(data)
+      });
+      console.log(data);
+    } catch (Error) {
+      console.log(Error);
+    }
   };
-  const clearToCart=async(id)=>{
-    const{data}=await axios.patch(`${import.meta.env.VITE_API_URL}/cart/removeItem`,{
-      productId:id
-    },
-    {
-      headers:{
-        Authorization:`Tariq__${token}`
-
-      }
-    })
-    console.log(data)
+  if (loader) {
+    return <Loader />;
   }
 
   return (
     <>
-      {details.map( e => 
-        <div key={e.productId}>
-          <p>Product Name: {e.details.name}</p>
-          <p>Quantity: {e.quantity}</p>
-          <button className={style.button} onClick={() => increase(e.productId)}>increase</button>
-          <button className={style.button} onClick={() => decrease(e.productId)}>decrease</button>
-          <button onClick={()=>clearToCart(e.productId)}>Clear</button>
-        </div>
+      {details.length > 0 ? (
+        ""
+      ) : (
+        <p className="text-center fs-2">cart is empty</p>
       )}
-  
-  
-  
-
+      <p className="text-center fs-2">{error}</p>
+      <div className={style.rowA}>
+        {details.map((e) => (
+          <div className={style.row} key={e.productId}>
+            <p className="fs-3"> {e.details.name}</p>
+            <button
+              className={style.button}
+              onClick={() => decrease(e.productId)}
+            >
+              -
+            </button>
+            <p className="fs-3"> {e.quantity}</p>
+            <button
+              className={style.button}
+              onClick={() => increase(e.productId)}
+            >
+              +
+            </button>
+            <button
+              disabled={loaderA ? "disabled" : null}
+              className="fs-3 bg-danger rounded btn btn-secondary"
+              onClick={() => clearToCart(e.productId)}
+            >
+              Clear
+            </button>
+          </div>
+        ))}
+        {details.length > 0 ? (
+          <button
+            className="fs-3 bg-danger rounded btn btn-secondary"
+            onClick={clearAll}
+          >
+            Clear All Products
+          </button>
+        ) : (
+          ""
+        )}
+      </div>
     </>
   );
 }
