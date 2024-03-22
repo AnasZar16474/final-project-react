@@ -75,16 +75,20 @@
   align-items: center;
   color: #262626;
 }
+.header .span{
+  background-color: red;
+  padding:2px 10px;
+}
 @media screen and (max-width: 1400px){
   .header .row button{
    
-    margin-left: 400px;
+    margin-left: 380px;
   }
 }
 @media screen and (max-width: 1200px){
   .header .row button{
     
-    margin-left: 225px;
+    margin-left: 200px;
   }
 }
 @media screen and (max-width: 992px){

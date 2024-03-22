@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import style from "../css/Cart.module.css";
 import Loader from "../../../Loader/Loader";
 import { Bounce, toast } from "react-toastify";
+import { Link } from "react-router-dom";
 function Cart() {
   const [details, setDetails] = useState([]);
   const [error, setError] = useState("");
   const [loader, setLoader] = useState(true);
   const [loaderA, setLoaderA] = useState(false);
+  const [loaderB, setLoaderB] = useState(false);
+  const [loaderC, setLoaderC] = useState(false);
   const token = localStorage.getItem("userToken");
   const getCart = async () => {
     try {
@@ -25,9 +28,10 @@ function Cart() {
     }
   };
   useEffect(() => {
-    getCart();
-  }, [details]);
+    getCart();}
+    , [details]);
   const increase = async (productId) => {
+    setLoaderB(true);
     try {
       const { data } = await axios.patch(
         `${import.meta.env.VITE_API_URL}/cart/incraseQuantity`,
@@ -44,8 +48,12 @@ function Cart() {
     } catch (Error) {
       console.log(Error);
     }
+    finally{
+      setLoaderB(false)
+    }
   };
   const decrease = async (productId) => {
+    setLoaderC(true);
     try {
       const { data } = await axios.patch(
         `${import.meta.env.VITE_API_URL}/cart/decraseQuantity`,
@@ -61,6 +69,9 @@ function Cart() {
       console.log(data);
     } catch (Error) {
       console.log(Error);
+    }
+    finally{
+      setLoaderC(false)
     }
   };
 
@@ -126,6 +137,7 @@ function Cart() {
           <div className={style.row} key={e.productId}>
             <p className="fs-3"> {e.details.name}</p>
             <button
+             disabled={loaderC ? "disabled" : null}
               className={style.button}
               onClick={() => decrease(e.productId)}
             >
@@ -133,6 +145,7 @@ function Cart() {
             </button>
             <p className="fs-3"> {e.quantity}</p>
             <button
+             disabled={loaderB ? "disabled" : null}
               className={style.button}
               onClick={() => increase(e.productId)}
             >
@@ -158,6 +171,8 @@ function Cart() {
           ""
         )}
       </div>
+      {details.length>0? <Link to="/Order">checkout</Link>:""}
+     
     </>
   );
 }

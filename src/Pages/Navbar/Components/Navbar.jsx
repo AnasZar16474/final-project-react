@@ -2,8 +2,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import style from "./../Style/Navbar.module.css";
 import { UserContext } from "../../../context/User";
 import { useContext } from "react";
+import { CartContext } from "../../../context/Cart";
 function Navbar() {
   const { userName, setUserName, setUserToken } = useContext(UserContext);
+  const { count } = useContext(CartContext);
   const navigate = useNavigate();
   const logout = () => {
     localStorage.removeItem("userToken");
@@ -39,7 +41,7 @@ function Navbar() {
                       </li>
                       <li>
                         <NavLink className={style.home} to="Cart">
-                          Cart
+                          Cart <span className={style.span}>{count}</span>
                         </NavLink>
                       </li>
                     </ul>

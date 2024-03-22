@@ -14,6 +14,9 @@ import Products from "./Pages/ProductsAll/Components/Products";
 import SendCode from "./Pages/SendCode/Components/SendCode";
 import ForgotPassword from "./Pages/ForgotPassword/Components/ForgotPassword";
 import Product from "./Pages/Product/Cpmponents/Product";
+import Order from "./Pages/Order/Components/Order";
+import Profile from "./Pages/Profile/Components/Profile";
+import CartContextProvider from "./context/Cart";
 
 function App() {
   const router = createBrowserRouter([
@@ -65,16 +68,31 @@ function App() {
       element:<Product/>
     },
     {
+      path:"/Order",
+      element:
+      <ProtectedRoutes>
+      <Order/>
+      </ProtectedRoutes>
+    },
+    {
+      path:"/Profile",
+      element:
+      <ProtectedRoutes>
+      <Profile/>
+      </ProtectedRoutes>
+    },
+    {
       path:"/*",
       element:<Error/>
     },]
     },
   ]);
   return <>
-  
+  <CartContextProvider>
   <UserContextProvider>
   <RouterProvider router={router} />
   </UserContextProvider>
+  </CartContextProvider>
   <ToastContainer />
   
   
