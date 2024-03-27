@@ -52,7 +52,6 @@ function Signup() {
       formData.append("email", user.email);
       formData.append("password", user.password);
       formData.append("image", user.image);
-      console.log(formData);
       try {
         const { data } = await axios.post(
           `${import.meta.env.VITE_API_URL}/auth/signup`,
@@ -99,10 +98,10 @@ function Signup() {
     <>
       {error.length > 0 ? error.map((e) => <p key={e}>{e}</p>) : ""}
       <form onSubmit={handleSubmit}>
+      <div className="d-flex flex-column gap-2 col-4 align-items-center justify-content-center m-auto">
         <label htmlFor="userName">userName</label>
         <input
           type="text"
-          placeholder="Entre name"
           id="userName"
           name="userName"
           onChange={handleChange}
@@ -116,7 +115,7 @@ function Signup() {
           onChange={handleChange}
           value={user.email}
         />
-        <label htmlFor=" password"> password</label>
+        <label htmlFor="password"> password</label>
         <input
           type="password"
           id="password"
@@ -127,6 +126,7 @@ function Signup() {
         <label htmlFor="image">image</label>
         <input type="file" id="image" name="image" onChange={handleImage} />
         <input type="submit" disabled={loader?"disabled":null} value="Register" />
+        </div>
       </form>
     </>
   );

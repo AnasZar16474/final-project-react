@@ -93,6 +93,7 @@ finally{setLoader(false)}
     <>
     {error.length > 0 ? error.map((e) => <p key={e}>{e}</p>) : ""}
     <form onSubmit={handleSubmit}>
+    <div className="d-flex flex-column gap-2 col-4 align-items-center justify-content-center m-auto">
       <label htmlFor="email">email</label>
       <input
         type="email"
@@ -101,7 +102,7 @@ finally{setLoader(false)}
         onChange={handleChange}
         value={user.email}
       />
-      <label htmlFor=" password"> password</label>
+      <label htmlFor="password"> password</label>
       <input
         type="password"
         id="password"
@@ -110,8 +111,9 @@ finally{setLoader(false)}
         value={user.password}
       />
       <input type="submit" disabled={loader?"disabled":null} value="Login" />
+      <Link to="/SendCode">Forgot Password??</Link>
+      </div>
     </form>
-    <Link to="/SendCode">Forgot Password??</Link>
     </>
   )
 }

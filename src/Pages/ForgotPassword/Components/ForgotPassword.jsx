@@ -24,14 +24,15 @@ function ForgotPassword() {
 
   return (
     <form onSubmit={handleSubmit}>
-<label> email </label>
-<input type="email" name="email" value={user.email} onChange={handleChange}/>
-<label> password </label>
-<input  type="password" name="password" value={user.password} onChange={handleChange}/>
-<label> code </label>
-<input  type="text" name="code" value={user.code} onChange={handleChange}/>
+        <div className="d-flex flex-column gap-2 col-4 align-items-center justify-content-center m-auto">
+<label htmlFor="email"> email </label>
+<input id="email" type="email" name="email" value={user.email} onChange={handleChange}/>
+<label htmlFor="password"> password </label>
+<input id="password"  type="password" name="password" value={user.password} onChange={handleChange}/>
+<label htmlFor="code"> code </label>
+<input id="code"  type="text" name="code" value={user.code} onChange={handleChange}/>
 <input type="submit" value="Register"/>
-
+</div>
     </form>
   )
 }

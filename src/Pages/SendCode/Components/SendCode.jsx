@@ -18,10 +18,11 @@ function SendCode() {
     }
   return (
   <form onSubmit={handleSubmit}>
-   <label>Email</label>
-   <input type="email" value={email} onChange={handleEmail} />
+      <div className="d-flex flex-column gap-2 col-4 align-items-center justify-content-center m-auto">
+   <label htmlFor="email">Email</label>
+   <input id="email" type="email" value={email} onChange={handleEmail} />
    <input type="submit" value="Register"/>
-   
+   </div>
    
    </form>
    
