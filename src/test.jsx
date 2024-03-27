@@ -26,7 +26,7 @@ function Navbar() {
                     <ul>
                       <li>
                         <NavLink className={style.home} to="/Profile">
-                         Profile
+                          Profile
                         </NavLink>
                       </li>
                       <li>
@@ -78,3 +78,7 @@ function Navbar() {
 }
 
 export default Navbar;
+
+
+
+

@@ -1,21 +1,22 @@
-import axios from "axios"
-import { useEffect } from "react"
+import { Outlet } from "react-router-dom"
+import { Link} from "react-router-dom";
+import style from "./Profile.module.css"
 
 
 function Profile() {
-    const token=localStorage.getItem("userToken");
-    const getOrder=async()=>{
-        try{
-        const{data}=await axios.get( `${import.meta.env.VITE_API_URL}/order`,{
-            headers:{
-                Authorization:`Tariq__${token}`
-            }
-        })
-        console.log(data)
-    }catch(Error){console.log(Error)}}
-    useEffect(()=>{getOrder()},[])
+  
   return (
-    <div>Profile</div>
+   <>
+   <div className="d-flex flex-column gap-3 fs-3">
+
+  <Link to="About">About</Link>
+  <Link to="contact">contact</Link>
+  <Link to="myOrders">MyOrders</Link>
+  </div>
+  <div className={`d-flex flex-column gap-3 justify-content-center align-items-center flex-wrap ${style.profile}`}>
+  <Outlet/>
+  </div>
+  </>
   )
 }
 

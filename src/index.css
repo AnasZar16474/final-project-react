@@ -31,6 +31,10 @@ ul {
 .card img{
     aspect-ratio: 200 / 230
 }
-.anas{
-    width: 100%;
+.profile{
+    width:40%;
+    height: 30%;
+}
+.walaa{
+    background-color: black;
 }

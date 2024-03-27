@@ -8,7 +8,7 @@ const UserContextProvider = ({ children }) => {
 if(userToken!=null){
   const decoded = jwtDecode(userToken);
   setUserName(decoded.userName)
-  console.log(userName)
+  console.log(decoded)
 }}
   useEffect(()=>{
 

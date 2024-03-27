@@ -2,7 +2,12 @@
 
 function Footer() {
   return (
-    <div>Footer</div>
+    <div className="bg-secondary mt-2">
+    
+    <p className="text-center fs-2">zarzouranas@gmail.com</p>
+    
+    </div>
+
   )
 }
 

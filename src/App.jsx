@@ -17,6 +17,9 @@ import Product from "./Pages/Product/Cpmponents/Product";
 import Order from "./Pages/Order/Components/Order";
 import Profile from "./Pages/Profile/Components/Profile";
 import CartContextProvider from "./context/Cart";
+import About from "./Pages/Profile/Components/About";
+import Contact from "./Pages/Profile/Components/Contact";
+import MyOrders from "./Pages/Profile/Components/MyOrders";
 
 function App() {
   const router = createBrowserRouter([
@@ -75,11 +78,27 @@ function App() {
       </ProtectedRoutes>
     },
     {
-      path:"/Profile",
-      element:
-      <ProtectedRoutes>
-      <Profile/>
-      </ProtectedRoutes>
+      path:"Profile",
+      element:<Profile/>,
+      children:[
+        {
+          path:"",
+          element:<About/>
+        },
+        {
+          path:"MyOrders",
+          element:<MyOrders/>
+        },
+        {
+          path:"About",
+          element:<About/>
+        },
+        {
+          path:"Contact",
+          element:<Contact/>
+        }
+      ]
+   
     },
     {
       path:"/*",
@@ -94,9 +113,7 @@ function App() {
   </UserContextProvider>
   </CartContextProvider>
   <ToastContainer />
-  
-  
-  </>;
+   </>;
 }
 
 export default App;

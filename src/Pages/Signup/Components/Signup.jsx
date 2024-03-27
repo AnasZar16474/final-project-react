@@ -52,7 +52,7 @@ function Signup() {
       formData.append("email", user.email);
       formData.append("password", user.password);
       formData.append("image", user.image);
-      console.log(user);
+      console.log(formData);
       try {
         const { data } = await axios.post(
           `${import.meta.env.VITE_API_URL}/auth/signup`,
@@ -75,6 +75,7 @@ function Signup() {
     
         }
       } catch (Error) {
+        console.log(Error)
         if(Error.response.data.message === "email already exists"){
           toast.error(Error.response.data.message, {
             position: "top-right",
