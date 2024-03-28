@@ -157,13 +157,15 @@ else{
    
     {error.length>0?error.map(e=><p key={e}>{e}</p>):""}
     <form onSubmit={handleSubmit}>
-<label>couponName</label>
-<input type="text" onChange={handleChange} name="couponName" />
-<label>address</label>
-<input type="text" onChange={handleChange} name="address"/>
-<label>phone</label>
-<input type="number" onChange={handleChange} name="phone"/>
-<input type="submit" disabled={loader?"disabled":""}/>
+    <div className="d-flex flex-column gap-2 col-4 align-items-center justify-content-center m-auto">
+<label htmlFor="couponName">couponName</label>
+<input type="text" id="couponName" onChange={handleChange} name="couponName" />
+<label htmlFor="address">address</label>
+<input type="text" id="address" onChange={handleChange} name="address"/>
+<label htmlFor="phone">phone</label>
+<input type="number" id="phone" onChange={handleChange} name="phone"/>
+<input type="submit" value="sendOrder" disabled={loader?"disabled":""}/>
+</div>
   </form>
   </>
   )

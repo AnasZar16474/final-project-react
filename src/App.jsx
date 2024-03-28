@@ -16,7 +16,7 @@ import ForgotPassword from "./Pages/ForgotPassword/Components/ForgotPassword";
 import Product from "./Pages/Product/Cpmponents/Product";
 import Order from "./Pages/Order/Components/Order";
 import Profile from "./Pages/Profile/Components/Profile";
-import CartContextProvider from "./context/Cart";
+import CartContextProvider from "./context/CartContext";
 import About from "./Pages/Profile/Components/About";
 import Contact from "./Pages/Profile/Components/Contact";
 import MyOrders from "./Pages/Profile/Components/MyOrders";

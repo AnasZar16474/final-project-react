@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import style from "./../Style/Navbar.module.css";
 import { UserContext } from "../../../context/User";
 import { useContext } from "react";
-import { CartContext } from "../../../context/Cart";
+import { CartContext } from "../../../context/CartContext";
 function Navbar() {
   const { userName, setUserName, setUserToken } = useContext(UserContext);
   const { count } = useContext(CartContext);

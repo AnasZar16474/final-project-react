@@ -20,16 +20,13 @@ function Cart() {
         },
       });
       setDetails(data.products);
-      console.log(data);
     } catch (Error) {
       setError(Error.response.data.message);
     } finally {
       setLoader(false);
     }
   };
-  useEffect(() => {
-    getCart();}
-    , [details]);
+  useEffect(()=>{getCart(),[]})
   const increase = async (productId) => {
     setLoaderB(true);
     try {
@@ -44,7 +41,9 @@ function Cart() {
           },
         }
       );
-      console.log(data);
+      if(data.message==="success"){
+       getCart()
+      }
     } catch (Error) {
       console.log(Error);
     }
@@ -66,7 +65,9 @@ function Cart() {
           },
         }
       );
-      console.log(data);
+      if(data.message==="success"){
+        getCart()
+       }
     } catch (Error) {
       console.log(Error);
     }
@@ -160,9 +161,12 @@ function Cart() {
             </button>
           </div>
         ))}
-        {details.length > 0 ? (
+       {details.length>0? <Link to="/Order"  className="fs-3 bg-danger rounded btn btn-secondary">checkout</Link>:""}
+      </div>
+    
+      {details.length > 0 ? (
           <button
-            className="fs-3 bg-danger rounded btn btn-secondary"
+            className="fs-3 bg-danger rounded btn btn-secondary col-12"
             onClick={clearAll}
           >
             Clear All Products
@@ -170,9 +174,6 @@ function Cart() {
         ) : (
           ""
         )}
-      </div>
-      {details.length>0? <Link to="/Order">checkout</Link>:""}
-     
     </>
   );
 }
