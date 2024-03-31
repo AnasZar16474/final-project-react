@@ -5,8 +5,10 @@ export const CartContext = createContext();
 
 export const CartContextProvider = ({ children }) => {
   const token = localStorage.getItem("userToken");
-  const [count, setCount] = useState("");
-  const [data, setData] = useState("");
+  const [count, setCount] = useState(0);
+  const [details, setDetails] = useState([]);
+  const [error, setError] = useState("");
+  const [loader, setLoader] = useState(true);
   const getCart = async () => {
     try {
       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
@@ -14,18 +16,20 @@ export const CartContextProvider = ({ children }) => {
           Authorization: `Tariq__${token}`,
         },
       });
-      setData(data);
       setCount(data.count);
+      setDetails(data.products);
     } catch (Error) {
-      console.log(Error);
+      setError(Error.response.data.message);
+    } finally {
+      setLoader(false);
     }
   };
   useEffect(() => {
     getCart();
-  }, [data]);
+  }, []);
 
   return (
-    <CartContext.Provider value={{ count }}>{children}</CartContext.Provider>
+    <CartContext.Provider value={{ count,getCart,details,error,loader }}>{children}</CartContext.Provider>
   );
 };
 export default CartContextProvider;

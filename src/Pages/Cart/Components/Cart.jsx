@@ -1,32 +1,19 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import style from "../css/Cart.module.css";
 import Loader from "../../../Loader/Loader";
 import { Bounce, toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { CartContext } from "../../../context/CartContext";
 function Cart() {
-  const [details, setDetails] = useState([]);
-  const [error, setError] = useState("");
-  const [loader, setLoader] = useState(true);
   const [loaderA, setLoaderA] = useState(false);
   const [loaderB, setLoaderB] = useState(false);
   const [loaderC, setLoaderC] = useState(false);
   const token = localStorage.getItem("userToken");
-  const getCart = async () => {
-    try {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/cart`, {
-        headers: {
-          Authorization: `Tariq__${token}`,
-        },
-      });
-      setDetails(data.products);
-    } catch (Error) {
-      setError(Error.response.data.message);
-    } finally {
-      setLoader(false);
-    }
-  };
-  useEffect(()=>{getCart(),[]})
+ const{getCart,details,error,loader}=useContext(CartContext)
+ useEffect(()=>{
+getCart()
+ },[])
   const increase = async (productId) => {
     setLoaderB(true);
     try {
@@ -102,6 +89,7 @@ function Cart() {
           theme: "colored",
           transition: Bounce,
         });
+        getCart();
       }
     } catch (Error) {
       console.log(Error);
@@ -116,7 +104,9 @@ function Cart() {
           Authorization: `Tariq__${token}`,
         },
       });
-      console.log(data);
+      if(data.message==="success"){
+        getCart();
+      }
     } catch (Error) {
       console.log(Error);
     }

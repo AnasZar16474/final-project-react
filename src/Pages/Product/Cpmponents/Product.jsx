@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { Bounce, toast } from "react-toastify";
 import Loader from "../../../Loader/Loader";
+import { CartContext } from "../../../context/CartContext";
 
 
 function Product() {
+  const{getCart}=useContext(CartContext)
   const [loaderA,setLoaderA]=useState(false);
   const [loaderB,setLoaderB]=useState(false);
   const token=localStorage.getItem("userToken")
@@ -25,8 +27,8 @@ finally{
   setLoader(false)
 }}
   useEffect(()=>{
-  getProductDetails(),[]
-})
+  getProductDetails()
+},[])
 const addToCart=async(productId)=>{
   setLoaderA(true);
   try{
@@ -51,6 +53,7 @@ const addToCart=async(productId)=>{
       theme: "colored",
       transition: Bounce,
       });
+      getCart()
   }
 }catch(Error){if(Error.response.data.message==="product already exists"){
   toast.error(Error.response.data.message, {
@@ -99,7 +102,6 @@ try{
       transition: Bounce,
       });
   }
-
   }
 catch(Error){console.log(Error)
   if(Error.response.data.message === 'can not review this product' ){
@@ -170,5 +172,4 @@ if(loader){
     </>
   )
 }
-
 export default Product

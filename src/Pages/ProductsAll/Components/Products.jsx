@@ -42,12 +42,10 @@ function Products() {
       setLoader(false);
     }
   };
-  const getValue = async () => {
-    const value = document.getElementById("search").value;
-    console.log(value);
+  const getValue = async (search) => {
     try {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/products?page=1&limit=10&sort=${value}`
+        `${import.meta.env.VITE_API_URL}/products?page=1&limit=10&sort=${search}`
       );
       setProducts(data.products);
     } catch (Error) {
@@ -86,7 +84,6 @@ function Products() {
     }
   };
   const changeCPage = (id) => {
-    console.log(currentPage);
     setCurrentPage(id);
   };
   const nextPage = () => {
@@ -104,7 +101,6 @@ function Products() {
 useEffect(()=>{
   changeItems()
 },[nPage])
-
   if (loader) {
     return <Loader />;
   }
@@ -120,21 +116,23 @@ useEffect(()=>{
           aria-label="Dollar amount (with dot and two decimal places)"
         />
       </div>
-      <div>
+      <div className="d-flex justify-content-between flex-wrap">
+        <div className="d-flex gap-2">
         <p className="fs-3">SortBy</p>
-        <select id="search" onChange={getValue}>
-          <option> default</option>
-          <option> finalPrice</option>
-          <option> -finalPrice </option>
-          <option> name </option>
-          <option> -name </option>
-          <option> discount </option>
-          <option> -discount </option>
+        <select onChange={(e)=>getValue(e.target.value)}>
+          <option value="default"> default</option>
+          <option value="finalPrice"> finalPrice</option>
+          <option value="-finalPrice"> -finalPrice </option>
+          <option value="name"> name </option>
+          <option value="-name"> -name </option>
+          <option value="discount"> discount </option>
+          <option value="-discount"> -discount </option>
         </select>
+        </div>
         <form onSubmit={handleSubmit}>
           <input type="number" placeholder="min price" onChange={handleFormA} />
           <input type="number" placeholder="max price" onChange={handleFormB} />
-          <input type="submit" />
+          <input className="ps-2 pe-2 bg-danger text-info" type="submit" value="Go" />
         </form>
       </div>
       <div className="d-flex flex-column gap-2 justify-content-center">
